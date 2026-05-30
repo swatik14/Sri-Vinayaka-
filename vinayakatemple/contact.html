@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, sans-serif;
+    }
+
+    body{
+      background:#f4f4f4;
+    }
+
+    /* HERO SECTION */
+
+    .hero{
+      width:100%;
+      height:100vh;
+
+      background:
+      linear-gradient(rgba(0,0,0,0.5),
+      rgba(0,0,0,0.5)),
+      url('ganesha.jpeg');
+
+      background-size:cover;
+      background-position:center;
+      background-repeat:no-repeat;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+
+      color:white;
+      padding:20px;
+    }
+
+    .hero h1{
+      font-size:60px;
+      margin-bottom:10px;
+      font-weight:300;
+    }
+
+    .hero p{
+      font-size:18px;
+    }
+
+    /* CONTACT SECTION */
+
+    .contact-section{
+      width:100%;
+      display:flex;
+      flex-direction:row;
+      justify-content:center;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:18px;
+      margin-top:-60px;
+      padding:30px;
+    }
+
+    .contact-card{
+      width:210px;
+      min-height:170px;
+      background:white;
+      border-radius:15px;
+      box-shadow:0 5px 15px rgba(0,0,0,0.1);
+      text-align:center;
+      padding:18px 15px;
+      transition:0.3s;
+    }
+
+    .contact-card:hover{
+      transform:translateY(-8px);
+    }
+
+    .contact-card i{
+      font-size:30px;
+      color:#ff6b4a;
+      margin-bottom:10px;
+    }
+
+    .contact-card h2{
+      font-size:20px;
+      margin-bottom:8px;
+      color:#222;
+    }
+
+    .contact-card p,
+    .contact-card a{
+      text-decoration:none;
+      color:#555;
+      font-size:14px;
+      line-height:24px;
+    }
+
+    .contact-card a:hover{
+      color:#ff6b4a;
+    }
+
+    /* MOBILE */
+
+    @media(max-width:768px){
+
+      .hero{
+        height:250px;
+      }
+
+      .hero h1{
+        font-size:40px;
+      }
+
+      .hero p{
+        font-size:15px;
+      }
+
+      .contact-card{
+        width:90%;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- HERO -->
+
+  <section class="hero">
+
+    <div>
+
+      <h1>Contact Us</h1>
+
+      <p>
+        Welcome to Sri Siddhi Vinayaka Temple
+      </p>
+
+    </div>
+
+  </section>
+
+  <!-- CONTACT SECTION -->
+
+  <section class="contact-section">
+
+    <!-- EMAIL -->
+
+    <div class="contact-card">
+
+      <i class="fa-solid fa-envelope"></i>
+
+      <h2>Email</h2>
+
+      <p>
+        <a href="mailto:vinayakatemple@gmail.com">
+          vinayakatemple@gmail.com
+        </a>
+      </p>
+
+      <p>Temple Support</p>
+
+    </div>
+
+    <!-- WHATSAPP -->
+
+    <div class="contact-card">
+
+      <i class="fa-brands fa-whatsapp"></i>
+
+      <h2>WhatsApp</h2>
+
+      <p>
+        <a href="https://wa.me/919590505555" target="_blank">
+          9590505555
+        </a>
+      </p>
+
+      <p>Daily Updates</p>
+
+    </div>
+
+    <!-- PHONE -->
+
+    <div class="contact-card">
+
+      <i class="fa-solid fa-phone"></i>
+
+      <h2>Temple Office</h2>
+
+      <p>
+        <a href="tel:+919590505555">
+          9590505555
+        </a>
+      </p>
+
+      <p>6 AM - 9 PM</p>
+
+    </div>
+
+    <!-- LOCATION -->
+
+    <div class="contact-card">
+
+      <i class="fa-solid fa-location-dot"></i>
+
+      <h2>Location</h2>
+
+      <p>
+        Sri Siddhi Vinayaka Temple
+      </p>
+
+      <p>Kengeri, Bangalore</p>
+
+    </div>
+
+    <!-- DONATION -->
+
+    <div class="contact-card">
+
+      <i class="fa-solid fa-hand-holding-heart"></i>
+
+      <h2>Donations</h2>
+
+      <p>Support Temple</p>
+
+      <p>UPI: vinayaka@upi</p>
+
+    </div>
+
+  </section>
+
+</body>
+</html>

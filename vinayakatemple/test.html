@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sri Vinayaka Temple</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body{
+            background:#fff8f0;
+        }
+
+        /* TOP BAR */
+
+        .top-bar{
+            background:#6b0f0f;
+            color:white;
+            padding:10px 50px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            font-size:14px;
+        }
+
+        .top-bar span{
+            margin-right:20px;
+        }
+
+        /* HEADER */
+
+        header{
+            background:white;
+            padding:15px 50px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            box-shadow:0 2px 10px rgba(0,0,0,0.1);
+            position:sticky;
+            top:0;
+            z-index:1000;
+        }
+
+        /* LOGO */
+
+        .logo{
+            display:flex;
+            align-items:center;
+        }
+
+        .logo img{
+            width:60px;
+            margin-right:10px;
+        }
+
+        .logo h1{
+            color:#8b1e1e;
+            font-size:28px;
+        }
+
+        .logo p{
+            color:#b8860b;
+            font-size:12px;
+            letter-spacing:2px;
+        }
+
+        /* NAVIGATION */
+
+        nav ul{
+            display:flex;
+            list-style:none;
+        }
+
+        nav ul li{
+            margin:0 15px;
+        }
+
+        nav ul li a{
+            text-decoration:none;
+            color:#333;
+            font-weight:bold;
+            transition:0.3s;
+        }
+
+        nav ul li a:hover{
+            color:#d2691e;
+        }
+
+        /* BUTTON */
+
+        .live-btn{
+            background:#8b1e1e;
+            color:white;
+            padding:10px 20px;
+            border:none;
+            border-radius:5px;
+            cursor:pointer;
+            font-weight:bold;
+            transition:0.3s;
+        }
+
+        .live-btn:hover{
+            background:#d2691e;
+        }
+
+        /* MOBILE RESPONSIVE */
+
+        @media(max-width:900px){
+
+            header{
+                flex-direction:column;
+                text-align:center;
+            }
+
+            nav ul{
+                flex-direction:column;
+                margin-top:20px;
+            }
+
+            nav ul li{
+                margin:10px 0;
+            }
+
+            .top-bar{
+                flex-direction:column;
+                text-align:center;
+                gap:10px;
+            }
+
+            .live-btn{
+                margin-top:15px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- TOP BAR -->
+
+    <div class="top-bar">
+
+        <div>
+          
+            <span>🕉 Temple Timings: 6 AM - 12 PM | 5 PM - 9 PM</span>
+        </div>
+
+        <div>
+            📍 Kengeri, Bangalore
+        </div>
+
+    </div>
+
+    <!-- HEADER -->
+
+    <header>
+
+        <!-- LOGO -->
+
+        <div class="logo">
+
+            <img src="https://cdn-icons-png.flaticon.com/512/3659/3659898.png" alt="Temple Logo">
+
+            <div>
+                <h1>SRI VINAYAKA</h1>
+                <p>TEMPLE</p>
+            </div>
+
+        </div>
+
+        <!-- NAVIGATION -->
+
+        <nav>
+
+            <ul>
+                <li><a href="home.html">HOME</a></li>
+                <li><a href="#">ABOUT</a></li>
+                <li><a href="#">POOJA & SEVA</a></li>
+                <li><a href="#">FESTIVALS</a></li>
+                <li><a href="#">GALLERY</a></li>
+                <li><a href="#">DONATE</a></li>
+                <li><a href="contact.html">CONTACT</a></li>
+            </ul>
+
+        </nav>
+
+        <!-- LIVE DARSHAN BUTTON -->
+
+        <button class="live-btn">LIVE DARSHAN</button>
+
+    </header>
+
+</body>
+</html>
