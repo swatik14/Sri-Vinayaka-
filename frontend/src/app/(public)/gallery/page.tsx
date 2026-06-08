@@ -37,8 +37,8 @@ export default function GalleryPage() {
   return (
     <div>
       <div className="page-header">
-        <div className="max-w-4xl mx-auto px-4 relative z-10">
-          <p className="text-temple-gold text-2xl mb-2">📸</p>
+        <div className="max-w-4xl mx-auto px-4 relative z-10 reveal">
+          <p className="text-temple-gold text-2xl mb-2">ॐ</p>
           <h1 className="text-4xl md:text-5xl font-heading font-bold text-white mb-4">{t('galleryTitle')}</h1>
           <p className="text-white/80 text-xl">{t('gallerySubtitle')}</p>
         </div>
@@ -47,7 +47,7 @@ export default function GalleryPage() {
       <section className="py-12 bg-white">
         <div className="max-w-6xl mx-auto px-4">
           {/* Category filters */}
-          <div className="flex flex-wrap gap-2 mb-8">
+          <div className="flex flex-wrap gap-2 mb-8 reveal">
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -70,24 +70,25 @@ export default function GalleryPage() {
               ))}
             </div>
           ) : filtered.length === 0 ? (
-            <div className="text-center py-16 text-gray-400">
+            <div className="text-center py-16 text-gray-400 reveal">
               <ImageIcon size={48} className="mx-auto mb-4 opacity-30" />
               <p className="text-xl">No photos in this category yet</p>
             </div>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {filtered.map((item) => (
+              {filtered.map((item, i) => (
                 <button
                   key={item.id}
                   onClick={() => setLightbox(item)}
-                  className="group relative aspect-square bg-gray-100 rounded-xl overflow-hidden hover:scale-[1.02] transition-transform duration-300"
+                  className="group relative aspect-square bg-gray-100 rounded-2xl overflow-hidden reveal-scale"
+                  style={{ transitionDelay: `${(i % 8) * 0.06}s` }}
                 >
-                  {item.file_url.startsWith('http') ? (
+                  {(item.file_url.startsWith('http') || item.file_url.startsWith('/')) ? (
                     <Image
                       src={item.thumbnail_url || item.file_url}
                       alt={language === 'kn' ? (item.title_kn || '') : (item.title_en || '')}
                       fill
-                      className="object-cover"
+                      className="object-cover group-hover:scale-110 transition-transform duration-500"
                       unoptimized
                     />
                   ) : (
@@ -95,7 +96,7 @@ export default function GalleryPage() {
                       <ImageIcon size={32} className="text-temple-gold/40" />
                     </div>
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   {item.title_en && (
                     <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
                       <p className="text-white text-xs font-medium text-left">
@@ -110,6 +111,11 @@ export default function GalleryPage() {
                       </div>
                     </div>
                   )}
+                  {/* Gold corner accent */}
+                  <div className="absolute top-2 right-2 w-6 h-6 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+                    style={{ background: 'linear-gradient(135deg, #D4AF37, #FF9A00)' }}>
+                    <span className="text-white text-[8px] font-bold">✦</span>
+                  </div>
                 </button>
               ))}
             </div>
@@ -120,7 +126,7 @@ export default function GalleryPage() {
       {/* Lightbox */}
       {lightbox && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 animate-fade-in"
           onClick={() => setLightbox(null)}
         >
           <button
@@ -129,8 +135,8 @@ export default function GalleryPage() {
           >
             <X size={24} />
           </button>
-          <div className="relative max-w-3xl max-h-[80vh] w-full" onClick={(e) => e.stopPropagation()}>
-            {lightbox.file_url.startsWith('http') ? (
+          <div className="relative max-w-3xl max-h-[80vh] w-full animate-scale-in" onClick={(e) => e.stopPropagation()}>
+            {(lightbox.file_url.startsWith('http') || lightbox.file_url.startsWith('/')) ? (
               <Image
                 src={lightbox.file_url}
                 alt={language === 'kn' ? (lightbox.title_kn || '') : (lightbox.title_en || '')}

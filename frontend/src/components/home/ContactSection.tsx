@@ -10,8 +10,8 @@ export default function ContactSection() {
   return (
     <section className="py-16 bg-temple-cream-dark">
       <div className="max-w-6xl mx-auto px-4">
-        <div className="text-center mb-10">
-          <div className="gold-divider mb-4 max-w-xs mx-auto"><span className="text-temple-gold text-xl px-3">📍</span></div>
+        <div className="text-center mb-10 reveal">
+          <div className="gold-divider mb-4 max-w-xs mx-auto"><span className="text-temple-gold text-xl px-3">ॐ</span></div>
           <h2 className="section-title">{t('contactTitle')}</h2>
           <p className="section-subtitle">{t('contactSubtitle')}</p>
         </div>
@@ -19,17 +19,17 @@ export default function ContactSection() {
         <div className="grid md:grid-cols-2 gap-8 items-start">
           {/* Contact Info */}
           <div className="space-y-5">
-            <div className="card p-6">
+            <div className="card p-6 reveal-left">
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-temple-saffron/10 flex items-center justify-center flex-shrink-0">
-                  <MapPin size={20} className="text-temple-saffron" />
+                <div className="w-12 h-12 rounded-xl bg-temple-saffron/10 flex items-center justify-center flex-shrink-0">
+                  <MapPin size={22} className="text-temple-saffron" />
                 </div>
                 <div>
                   <h3 className="font-heading font-bold text-temple-maroon mb-1">{t('visitUs')}</h3>
-                  <p className="text-gray-600">Temple Road, Basavanagudi</p>
-                  <p className="text-gray-600">Bangalore, Karnataka 560004</p>
+                  <p className="text-gray-600">Nagdevanahalli, Bangalore</p>
+                  <p className="text-gray-600">Karnataka - 560056</p>
                   <a
-                    href="https://maps.google.com"
+                    href="https://www.google.com/maps/search/Nagdevanahalli+Bangalore"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 text-temple-saffron text-sm font-medium mt-2 hover:gap-2.5 transition-all"
@@ -40,10 +40,10 @@ export default function ContactSection() {
               </div>
             </div>
 
-            <div className="card p-6">
+            <div className="card p-6 reveal-left" style={{ transitionDelay: '0.1s' }}>
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center flex-shrink-0">
-                  <Phone size={20} className="text-green-600" />
+                <div className="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center flex-shrink-0">
+                  <Phone size={22} className="text-green-600" />
                 </div>
                 <div>
                   <h3 className="font-heading font-bold text-temple-maroon mb-1">{t('callUs2')}</h3>
@@ -57,10 +57,10 @@ export default function ContactSection() {
               </div>
             </div>
 
-            <div className="card p-6">
+            <div className="card p-6 reveal-left" style={{ transitionDelay: '0.2s' }}>
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0">
-                  <Mail size={20} className="text-blue-600" />
+                <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0">
+                  <Mail size={22} className="text-blue-600" />
                 </div>
                 <div>
                   <h3 className="font-heading font-bold text-temple-maroon mb-1">{t('emailUs')}</h3>
@@ -71,31 +71,31 @@ export default function ContactSection() {
               </div>
             </div>
 
-            <Link href="/contact" className="btn-secondary w-full justify-center mt-4">
+            <Link href="/contact" className="btn-secondary w-full justify-center mt-4 hover:scale-[1.02] transition-transform reveal">
               {t('sendMessage')}
             </Link>
           </div>
 
           {/* Map placeholder */}
-          <div className="card overflow-hidden h-full min-h-[350px]">
+          <div className="card overflow-hidden h-full min-h-[350px] reveal-right">
             <div className="bg-temple-cream-dark h-full min-h-[350px] flex flex-col items-center justify-center gap-4 p-8 text-center">
-              <MapPin size={48} className="text-temple-gold/40" />
+              <div className="w-16 h-16 rounded-full flex items-center justify-center animate-glow"
+                style={{ background: 'linear-gradient(135deg, #D4AF37, #FF9A00)' }}>
+                <MapPin size={28} className="text-white" />
+              </div>
               <div>
-                <p className="text-temple-maroon font-heading font-bold text-xl mb-2">Sri Vinayaka Ganapathi Temple</p>
-                <p className="text-gray-500 text-sm mb-1">Temple Road, Basavanagudi</p>
-                <p className="text-gray-500 text-sm">Bangalore, Karnataka 560004</p>
+                <p className="text-temple-maroon font-heading font-bold text-xl mb-2">Sri Sri Sri Karyasiddhi Vinayaka Temple</p>
+                <p className="text-gray-500 text-sm">Nagdevanahalli, Bangalore - 560056</p>
+                <p className="text-gray-500 text-sm">Karnataka, India</p>
               </div>
               <a
-                href="https://www.google.com/maps/search/Basavanagudi+Temple+Bangalore"
+                href="https://www.google.com/maps/search/Nagdevanahalli+Bangalore"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-primary"
+                className="btn-primary hover:scale-105 transition-transform"
               >
                 <Navigation size={16} /> Open in Google Maps
               </a>
-              <p className="text-gray-400 text-xs mt-2">
-                Replace with embedded Google Maps iframe in production
-              </p>
             </div>
           </div>
         </div>

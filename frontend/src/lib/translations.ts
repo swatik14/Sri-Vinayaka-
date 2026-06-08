@@ -13,7 +13,7 @@ export const translations = {
     adminDashboard: 'Admin Dashboard',
 
     // Temple
-    templeName: 'Sri Vinayaka Ganapathi Temple',
+    templeName: 'Sri Sri Sri Karyasiddhi Vinayaka Temple',
     templeTagline: 'Seek Blessings of the Elephant God',
     templeSubTagline: 'Where devotion meets divine grace',
 
@@ -123,7 +123,7 @@ export const translations = {
     openingHours: 'Opening Hours',
 
     // About
-    aboutTitle: 'About Sri Vinayaka Ganapathi Temple',
+    aboutTitle: 'About Sri Sri Sri Karyasiddhi Vinayaka Temple',
     ourHistory: 'Our History',
     architecture: 'Temple Architecture',
     priests: 'Our Priests',
@@ -215,7 +215,7 @@ export const translations = {
     adminDashboard: 'ನಿರ್ವಹಣಾ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್',
 
     // Temple
-    templeName: 'ಶ್ರೀ ವಿನಾಯಕ ಗಣಪತಿ ದೇವಾಲಯ',
+    templeName: 'ಶ್ರೀ ಶ್ರೀ ಶ್ರೀ ಕಾರ್ಯಸಿದ್ಧಿ ವಿನಾಯಕ ದೇವಾಲಯ',
     templeTagline: 'ಗಣೇಶನ ಆಶೀರ್ವಾದ ಪಡೆಯಿರಿ',
     templeSubTagline: 'ಭಕ್ತಿ ಮತ್ತು ದಿವ್ಯ ಕೃಪೆ ಸಂಗಮ',
 

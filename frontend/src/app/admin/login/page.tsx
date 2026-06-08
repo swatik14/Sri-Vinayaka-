@@ -39,7 +39,7 @@ export default function AdminLoginPage() {
           <div className="w-20 h-20 rounded-full bg-temple-gold flex items-center justify-center mx-auto mb-4 shadow-gold">
             <span className="text-4xl text-temple-maroon font-bold">ॐ</span>
           </div>
-          <h1 className="text-2xl font-heading font-bold text-white">Sri Vinayaka Temple</h1>
+          <h1 className="text-2xl font-heading font-bold text-white">Karyasiddhi Vinayaka Temple</h1>
           <p className="text-temple-gold text-sm mt-1">Admin Portal</p>
         </div>
 
@@ -101,7 +101,7 @@ export default function AdminLoginPage() {
         </div>
 
         <p className="text-center text-white/40 text-xs mt-5">
-          © {new Date().getFullYear()} Sri Vinayaka Ganapathi Temple Trust
+          © {new Date().getFullYear()} Sri Sri Sri Karyasiddhi Vinayaka Temple, Nagdevanahalli
         </p>
       </div>
     </div>

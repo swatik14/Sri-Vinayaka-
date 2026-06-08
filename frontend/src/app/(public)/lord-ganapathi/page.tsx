@@ -1,14 +1,15 @@
 'use client';
 
+import Image from 'next/image';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const forms = [
-  { name: 'Ganesha', kn: 'ಗಣೇಶ', desc: 'Lord of all beings', icon: '🐘' },
-  { name: 'Vinayaka', kn: 'ವಿನಾಯಕ', desc: 'Remover of obstacles', icon: '🙏' },
-  { name: 'Ganapathi', kn: 'ಗಣಪತಿ', desc: 'Leader of Ganas', icon: '👑' },
-  { name: 'Vighnaharta', kn: 'ವಿಘ್ನಹರ್ತ', desc: 'Destroyer of obstacles', icon: '⚡' },
-  { name: 'Lambodara', kn: 'ಲಂಬೋದರ', desc: 'Big-bellied one', icon: '🌟' },
-  { name: 'Heramba', kn: 'ಹೇರಂಬ', desc: 'Protector of the weak', icon: '🛡️' },
+  { name: 'Ganesha', kn: 'ಗಣೇಶ', desc: 'Lord of all beings' },
+  { name: 'Vinayaka', kn: 'ವಿನಾಯಕ', desc: 'Remover of obstacles' },
+  { name: 'Ganapathi', kn: 'ಗಣಪತಿ', desc: 'Leader of Ganas' },
+  { name: 'Vighnaharta', kn: 'ವಿಘ್ನಹರ್ತ', desc: 'Destroyer of obstacles' },
+  { name: 'Lambodara', kn: 'ಲಂಬೋದರ', desc: 'Big-bellied one' },
+  { name: 'Heramba', kn: 'ಹೇರಂಬ', desc: 'Protector of the weak' },
 ];
 
 const attributes = [
@@ -47,7 +48,7 @@ export default function LordGanapathiPage() {
   return (
     <div>
       <div className="page-header">
-        <div className="max-w-4xl mx-auto px-4 relative z-10">
+        <div className="max-w-4xl mx-auto px-4 relative z-10 reveal">
           <p className="text-temple-gold text-lg mb-2">ॐ गण गणपतये नमः</p>
           <h1 className="text-4xl md:text-5xl font-heading font-bold text-white mb-4">{t('lordTitle')}</h1>
           <p className="text-white/80 text-xl">{t('lordSubtitle')}</p>
@@ -57,19 +58,28 @@ export default function LordGanapathiPage() {
       {/* Significance */}
       <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
-          <div className="bg-temple-gradient rounded-2xl p-10 text-center text-white relative overflow-hidden">
-            <span className="absolute text-[250px] font-bold text-white/5 -top-16 -left-16">ॐ</span>
-            <div className="text-8xl mb-4">🐘</div>
-            <h2 className="font-heading font-bold text-3xl text-temple-gold mb-2">Lord Ganapathi</h2>
-            <p className="text-white/70 italic">&ldquo;He who overcomes all obstacles and bestows wisdom&rdquo;</p>
-            <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
-              <div className="bg-white/10 rounded-xl p-3"><p className="text-temple-gold font-bold">Vahana</p><p className="text-white/70">Mushaka (Mouse)</p></div>
-              <div className="bg-white/10 rounded-xl p-3"><p className="text-temple-gold font-bold">Consorts</p><p className="text-white/70">Siddhi & Riddhi</p></div>
-              <div className="bg-white/10 rounded-xl p-3"><p className="text-temple-gold font-bold">Parents</p><p className="text-white/70">Shiva & Parvati</p></div>
-              <div className="bg-white/10 rounded-xl p-3"><p className="text-temple-gold font-bold">Favorite</p><p className="text-white/70">Modaka</p></div>
+          <div className="relative rounded-2xl overflow-hidden shadow-temple reveal-left">
+            <div className="relative w-full aspect-[4/5]">
+              <Image
+                src="/images/ganesha-idol.jpg"
+                alt="Lord Ganesha"
+                fill
+                className="object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-temple-maroon/80 via-transparent to-transparent" />
+            </div>
+            <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+              <h2 className="font-heading font-bold text-2xl text-temple-gold mb-1">Lord Ganapathi</h2>
+              <p className="text-white/80 text-sm italic">&ldquo;He who overcomes all obstacles and bestows wisdom&rdquo;</p>
+              <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
+                <div className="bg-black/30 backdrop-blur-sm rounded-lg p-2"><p className="text-temple-gold font-bold">Vahana</p><p className="text-white/70">Mushaka (Mouse)</p></div>
+                <div className="bg-black/30 backdrop-blur-sm rounded-lg p-2"><p className="text-temple-gold font-bold">Consorts</p><p className="text-white/70">Siddhi & Riddhi</p></div>
+                <div className="bg-black/30 backdrop-blur-sm rounded-lg p-2"><p className="text-temple-gold font-bold">Parents</p><p className="text-white/70">Shiva & Parvati</p></div>
+                <div className="bg-black/30 backdrop-blur-sm rounded-lg p-2"><p className="text-temple-gold font-bold">Favorite</p><p className="text-white/70">Modaka</p></div>
+              </div>
             </div>
           </div>
-          <div>
+          <div className="reveal-right">
             <h2 className="section-title mb-4">{t('significance')}</h2>
             <div className="space-y-4 text-gray-600 leading-relaxed">
               <p>
@@ -95,13 +105,20 @@ export default function LordGanapathiPage() {
       {/* Attributes */}
       <section className="py-16 bg-temple-cream-dark">
         <div className="max-w-6xl mx-auto px-4">
-          <h2 className="section-title text-center mb-10">{t('attributes')}</h2>
+          <h2 className="section-title text-center mb-10 reveal">{t('attributes')}</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {attributes.map((a) => (
-              <div key={a.attr} className="card-hover p-5">
-                <h3 className="font-heading font-bold text-temple-maroon mb-1">
-                  {language === 'kn' ? a.kn : a.attr}
-                </h3>
+            {attributes.map((a, i) => (
+              <div key={a.attr} className="card-hover p-5 reveal-scale"
+                style={{ transitionDelay: `${i * 0.07}s` }}>
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                    style={{ background: 'linear-gradient(135deg, #6B1A1A, #4A0F0F)' }}>
+                    <span className="text-temple-gold text-xs font-bold">ॐ</span>
+                  </div>
+                  <h3 className="font-heading font-bold text-temple-maroon">
+                    {language === 'kn' ? a.kn : a.attr}
+                  </h3>
+                </div>
                 <p className="text-temple-saffron text-sm font-medium mb-2">{a.meaning}</p>
                 <p className="text-gray-500 text-sm leading-relaxed">
                   {language === 'kn' ? a.kn2 : a.en2}
@@ -115,11 +132,15 @@ export default function LordGanapathiPage() {
       {/* Forms */}
       <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-4">
-          <h2 className="section-title text-center mb-10">{t('forms')}</h2>
+          <h2 className="section-title text-center mb-10 reveal">{t('forms')}</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {forms.map(({ name, kn, desc, icon }) => (
-              <div key={name} className="card text-center p-5 hover:shadow-temple hover:-translate-y-1 transition-all duration-300">
-                <div className="text-4xl mb-2">{icon}</div>
+            {forms.map(({ name, kn, desc }, i) => (
+              <div key={name} className="card text-center p-5 hover:shadow-temple hover:-translate-y-2 transition-all duration-300 reveal-scale"
+                style={{ transitionDelay: `${i * 0.08}s` }}>
+                <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3"
+                  style={{ background: 'linear-gradient(135deg, #D4AF37, #FF9A00)' }}>
+                  <span className="text-white font-bold text-lg">ॐ</span>
+                </div>
                 <h3 className="font-heading font-bold text-temple-maroon text-sm">{language === 'kn' ? kn : name}</h3>
                 <p className="text-gray-400 text-xs mt-1">{desc}</p>
               </div>
@@ -129,12 +150,16 @@ export default function LordGanapathiPage() {
       </section>
 
       {/* Mantras */}
-      <section className="py-16 bg-temple-gradient">
-        <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-3xl font-heading font-bold text-white text-center mb-10">{t('mantras')}</h2>
+      <section className="py-16 bg-temple-gradient relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <span className="absolute text-[500px] font-bold text-white/[0.025] -top-20 -left-20 leading-none animate-float-slow">ॐ</span>
+        </div>
+        <div className="max-w-4xl mx-auto px-4 relative z-10">
+          <h2 className="text-3xl font-heading font-bold text-white text-center mb-10 reveal">{t('mantras')}</h2>
           <div className="space-y-6">
-            {mantras.map((m) => (
-              <div key={m.name} className="bg-white/10 border border-white/20 rounded-2xl p-6 text-white">
+            {mantras.map((m, i) => (
+              <div key={m.name} className="bg-white/10 border border-white/20 rounded-2xl p-6 text-white reveal"
+                style={{ transitionDelay: `${i * 0.15}s` }}>
                 <h3 className="text-temple-gold font-bold font-heading text-lg mb-3">{m.name}</h3>
                 <p className="text-2xl font-bold text-center mb-2 leading-relaxed">{m.mantra}</p>
                 <p className="text-white/60 text-center text-sm mb-2" style={{ fontFamily: 'Noto Sans Kannada, sans-serif' }}>

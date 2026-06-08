@@ -23,9 +23,9 @@ module.exports = {
         },
       },
       fontFamily: {
-        heading: ['Georgia', 'Cambria', 'serif'],
-        body: ['system-ui', '-apple-system', 'sans-serif'],
-        decorative: ['Palatino Linotype', 'Book Antiqua', 'Palatino', 'serif'],
+        heading: ['Cinzel', 'Georgia', 'Cambria', 'serif'],
+        body: ['Noto Sans', 'system-ui', '-apple-system', 'sans-serif'],
+        decorative: ['Cinzel', 'Palatino Linotype', 'Book Antiqua', 'serif'],
       },
       backgroundImage: {
         'temple-gradient': 'linear-gradient(135deg, #6B1A1A 0%, #4A0F0F 50%, #2C1A0E 100%)',

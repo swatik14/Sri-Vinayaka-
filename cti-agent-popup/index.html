@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Agent CTI Screen Pop</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f4f8;
+      min-height: 100vh;
+    }
+
+    /* ── Agent Status Bar ── */
+    .status-bar {
+      background: #1e293b;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+    }
+    .status-bar .agent-name { font-weight: 600; }
+    .call-status-badge {
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      background: #374151;
+      color: #9ca3af;
+      transition: all 0.3s;
+    }
+    .call-status-badge.ringing  { background: #fef3c7; color: #d97706; animation: pulse 1s infinite; }
+    .call-status-badge.incall   { background: #d1fae5; color: #065f46; }
+    .call-status-badge.ended    { background: #fee2e2; color: #991b1b; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    /* ── Main Layout ── */
+    .main { padding: 20px; max-width: 1100px; margin: 0 auto; }
+
+    /* ── Screen Pop Overlay ── */
+    .screen-pop-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    .screen-pop-overlay.show { display: flex; }
+
+    .screen-pop {
+      background: white;
+      border-radius: 16px;
+      width: 520px;
+      max-width: 95vw;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+      overflow: hidden;
+      animation: slideIn 0.3s ease-out;
+    }
+    @keyframes slideIn {
+      from { transform: translateY(-40px); opacity: 0; }
+      to   { transform: translateY(0);     opacity: 1; }
+    }
+
+    /* Pop Header */
+    .pop-header {
+      background: linear-gradient(135deg, #16a34a, #15803d);
+      color: white;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .pop-header .header-left { display: flex; align-items: center; gap: 10px; }
+    .pop-header .live-dot {
+      width: 10px; height: 10px;
+      background: #86efac;
+      border-radius: 50%;
+      animation: pulse 1s infinite;
+    }
+    .pop-header h3 { font-size: 15px; font-weight: 700; }
+    .pop-header .call-timer {
+      background: rgba(255,255,255,0.2);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Customer Info */
+    .customer-info {
+      padding: 20px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .customer-avatar-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .avatar {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: white;
+      font-size: 22px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .customer-name { font-size: 20px; font-weight: 700; color: #0f172a; }
+    .customer-phone { font-size: 14px; color: #64748b; margin-top: 2px; }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .info-item {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 10px 14px;
+    }
+    .info-item .label {
+      font-size: 11px;
+      font-weight: 600;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 3px;
+    }
+    .info-item .value {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1e293b;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .badge-hot   { background: #fee2e2; color: #b91c1c; }
+    .badge-warm  { background: #fef3c7; color: #b45309; }
+    .badge-cold  { background: #dbeafe; color: #1d4ed8; }
+    .badge-new   { background: #d1fae5; color: #065f46; }
+
+    /* Previous Calls */
+    .prev-calls {
+      padding: 14px 20px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .prev-calls h4 {
+      font-size: 12px;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+    .call-log {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .call-log-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #475569;
+      background: #f8fafc;
+      border-radius: 8px;
+      padding: 7px 12px;
+    }
+    .call-log-item .call-date { color: #94a3b8; }
+    .call-outcome {
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .outcome-connected    { background: #d1fae5; color: #065f46; }
+    .outcome-notanswered  { background: #fee2e2; color: #991b1b; }
+    .outcome-callback     { background: #fef3c7; color: #92400e; }
+
+    /* Notes */
+    .notes-area {
+      padding: 14px 20px;
+    }
+    .notes-area h4 {
+      font-size: 12px;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    .notes-area textarea {
+      width: 100%;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 13px;
+      resize: none;
+      outline: none;
+      color: #1e293b;
+      font-family: inherit;
+    }
+    .notes-area textarea:focus { border-color: #3b82f6; }
+
+    /* Actions */
+    .pop-actions {
+      padding: 14px 20px;
+      display: flex;
+      gap: 10px;
+      background: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+    }
+    .btn {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-primary { background: #2563eb; color: white; }
+    .btn-primary:hover { background: #1d4ed8; }
+    .btn-secondary { background: white; color: #374151; border: 1px solid #d1d5db; }
+    .btn-secondary:hover { background: #f9fafb; }
+    .btn-danger { background: #dc2626; color: white; }
+    .btn-danger:hover { background: #b91c1c; }
+
+    /* No Record Popup */
+    .no-record { text-align: center; padding: 30px 20px; }
+    .no-record .icon { font-size: 40px; margin-bottom: 12px; color: #94a3b8; }
+    .no-record h3 { color: #0f172a; font-size: 18px; margin-bottom: 6px; }
+    .no-record p { color: #64748b; font-size: 14px; margin-bottom: 20px; }
+    .no-record .phone-display {
+      background: #f1f5f9;
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 20px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      top: 60px;
+      right: 20px;
+      background: #1e293b;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      z-index: 9999;
+      display: none;
+      animation: slideIn 0.3s ease-out;
+    }
+    .toast.show { display: block; }
+
+    /* Demo Controls */
+    .demo-controls {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 600px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .demo-controls h3 { font-size: 14px; font-weight: 700; color: #374151; margin-bottom: 14px; }
+    .demo-btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+    .demo-btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .demo-btn:hover { transform: translateY(-1px); }
+    .db-outgoing  { background: #dbeafe; color: #1d4ed8; }
+    .db-incall    { background: #d1fae5; color: #065f46; }
+    .db-ended     { background: #fee2e2; color: #b91c1c; }
+    .db-incoming  { background: #fef9c3; color: #854d0e; }
+    .db-no-record { background: #f3e8ff; color: #6b21a8; }
+  </style>
+</head>
+<body>
+
+<!-- Status Bar -->
+<div class="status-bar">
+  <div class="agent-name">Agent Dashboard</div>
+  <div id="callStatusBadge" class="call-status-badge">IDLE</div>
+  <div style="font-size:12px; color:#9ca3af;">office24by7 CTI</div>
+</div>
+
+<!-- Toast Notification -->
+<div id="toast" class="toast"></div>
+
+<!-- Demo Controls (remove in production) -->
+<div class="main">
+  <div class="demo-controls">
+    <h3>Simulate CTI Events (Demo)</h3>
+    <div class="demo-btn-row">
+      <button class="demo-btn db-outgoing" onclick="simulate('OUTGOING_CALL')">1. Outgoing Call (RINGING)</button>
+      <button class="demo-btn db-incall"   onclick="simulate('INCALL')">2. INCALL — Customer Answered</button>
+      <button class="demo-btn db-ended"    onclick="simulate('CALL_ENDED')">3. CALL ENDED</button>
+      <button class="demo-btn db-incoming" onclick="simulate('INCOMING_CALL')">Incoming Call</button>
+      <button class="demo-btn db-no-record" onclick="simulate('INCALL_NO_RECORD')">INCALL — No Record</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCREEN POP — Customer Found
+══════════════════════════════════════════ -->
+<div id="screenPopOverlay" class="screen-pop-overlay">
+  <div class="screen-pop">
+
+    <!-- Header -->
+    <div class="pop-header">
+      <div class="header-left">
+        <div class="live-dot"></div>
+        <h3>Call Connected — Customer Details</h3>
+      </div>
+      <div id="callTimer" class="call-timer">00:00</div>
+    </div>
+
+    <!-- Customer Info -->
+    <div class="customer-info">
+      <div class="customer-avatar-row">
+        <div class="avatar" id="customerAvatar">R</div>
+        <div>
+          <div class="customer-name" id="customerName">Rahul Sharma</div>
+          <div class="customer-phone" id="customerPhone">+91 9876543210</div>
+        </div>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="label">Email</div>
+          <div class="value" id="customerEmail">rahul@example.com</div>
+        </div>
+        <div class="info-item">
+          <div class="label">Lead Status</div>
+          <div class="value" id="customerStatus">
+            <span class="badge badge-hot">Hot</span>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="label">Company</div>
+          <div class="value" id="customerCompany">Acme Corp</div>
+        </div>
+        <div class="info-item">
+          <div class="label">Call ID</div>
+          <div class="value" id="customerCallId" style="font-family:monospace;font-size:12px;">-</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Previous Calls -->
+    <div class="prev-calls">
+      <h4>Previous Calls</h4>
+      <div class="call-log" id="callLog">
+        <!-- Populated dynamically -->
+      </div>
+    </div>
+
+    <!-- Agent Notes -->
+    <div class="notes-area">
+      <h4>Call Notes</h4>
+      <textarea id="callNotes" rows="3" placeholder="Type notes about this call..."></textarea>
+    </div>
+
+    <!-- Actions -->
+    <div class="pop-actions">
+      <button class="btn btn-primary" onclick="openLeadProfile()">Open Full Profile</button>
+      <button class="btn btn-secondary" onclick="saveNotes()">Save Notes</button>
+      <button class="btn btn-danger" onclick="closePopup()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCREEN POP — No Customer Record
+══════════════════════════════════════════ -->
+<div id="noRecordOverlay" class="screen-pop-overlay">
+  <div class="screen-pop">
+    <div class="pop-header">
+      <div class="header-left">
+        <div class="live-dot"></div>
+        <h3>Call Connected — New Number</h3>
+      </div>
+      <div id="callTimerNew" class="call-timer">00:00</div>
+    </div>
+    <div class="no-record">
+      <div class="icon">👤</div>
+      <h3>No Record Found</h3>
+      <p>This number is not in your CRM. Create a new lead?</p>
+      <div class="phone-display" id="newLeadPhone">+91 9876543210</div>
+      <div class="pop-actions" style="padding:0; background:none; border:none;">
+        <button class="btn btn-primary" onclick="createNewLead()">Create New Lead</button>
+        <button class="btn btn-secondary" onclick="closeNoRecord()">Skip</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ─────────────────────────────────────────
+  // CTI State
+  // ─────────────────────────────────────────
+  let customerNumber = null;
+  let currentCallId  = null;
+  let timerInterval  = null;
+  let callSeconds    = 0;
+
+  // ─────────────────────────────────────────
+  // Listen to CTI iframe postMessage events
+  // ─────────────────────────────────────────
+  window.addEventListener('message', function(event) {
+    const data = event.data;
+    if (!data || !data.type) return;
+
+    handleCTIEvent(data);
+  });
+
+  function handleCTIEvent(data) {
+    console.log('CTI Event:', data);
+
+    // ── Outgoing call initiated ──
+    if (data.type === 'OUTGOING_CALL' && data.data?.status === 'RINGING') {
+      customerNumber = data.data.msg;
+      currentCallId  = data.data.Call_ID;
+      updateStatusBadge('RINGING', 'ringing');
+      showToast('Calling ' + customerNumber + '...');
+    }
+
+    // ── Incoming call ──
+    if ((data.type === 'INCOME_CALL' || data.type === 'INCOMING_CALL') && data.data?.status === 'RINGING') {
+      customerNumber = data.data.msg;
+      currentCallId  = data.data.Call_ID;
+      updateStatusBadge('INCOMING', 'ringing');
+      showToast('Incoming call from ' + customerNumber);
+    }
+
+    // ── INCALL: Customer answered — show popup IMMEDIATELY ──
+    if (data.type === 'CALL_STATUS' && data.data === 'INCALL') {
+      updateStatusBadge('INCALL', 'incall');
+      startCallTimer();
+
+      if (customerNumber) {
+        fetchCustomerAndShowPopup(customerNumber, currentCallId);
+      }
+    }
+
+    // ── Call ended ──
+    if (data.type === 'CALL_STATUS' && data.data === 'CALL_ENDED') {
+      updateStatusBadge('CALL ENDED', 'ended');
+      stopCallTimer();
+      showToast('Call ended. Duration: ' + getTimerDisplay());
+      // Do NOT auto-close popup — agent may need to save notes
+    }
+  }
+
+  // ─────────────────────────────────────────
+  // Fetch customer details & show popup
+  // ─────────────────────────────────────────
+  function fetchCustomerAndShowPopup(phone, callId) {
+
+    // Replace this fetch with your actual CRM API endpoint
+    fetchCustomerFromCRM(phone).then(customer => {
+      if (customer) {
+        showCustomerPopup(customer, callId);
+      } else {
+        showNoRecordPopup(phone, callId);
+      }
+    });
+  }
+
+  function showCustomerPopup(customer, callId) {
+    document.getElementById('customerAvatar').textContent  = customer.name.charAt(0).toUpperCase();
+    document.getElementById('customerName').textContent    = customer.name;
+    document.getElementById('customerPhone').textContent   = customer.phone;
+    document.getElementById('customerEmail').textContent   = customer.email;
+    document.getElementById('customerCompany').textContent = customer.company || 'N/A';
+    document.getElementById('customerCallId').textContent  = callId || '-';
+
+    // Lead status badge
+    const statusMap = {
+      hot:  'badge-hot',
+      warm: 'badge-warm',
+      cold: 'badge-cold',
+      new:  'badge-new',
+    };
+    const s = (customer.leadStatus || 'new').toLowerCase();
+    document.getElementById('customerStatus').innerHTML =
+      `<span class="badge ${statusMap[s] || 'badge-new'}">${customer.leadStatus}</span>`;
+
+    // Previous calls
+    renderCallLog(customer.previousCalls || []);
+
+    // Clear notes
+    document.getElementById('callNotes').value = '';
+
+    // Show popup immediately
+    document.getElementById('screenPopOverlay').classList.add('show');
+  }
+
+  function showNoRecordPopup(phone, callId) {
+    document.getElementById('newLeadPhone').textContent = phone;
+    document.getElementById('noRecordOverlay').classList.add('show');
+  }
+
+  function renderCallLog(calls) {
+    const log = document.getElementById('callLog');
+    if (!calls.length) {
+      log.innerHTML = '<div style="color:#94a3b8;font-size:12px;text-align:center;padding:8px">No previous calls</div>';
+      return;
+    }
+    log.innerHTML = calls.map(c => `
+      <div class="call-log-item">
+        <span>${c.date}</span>
+        <span>${c.duration}</span>
+        <span><span class="call-outcome outcome-${c.outcome.toLowerCase().replace(' ','')}">
+          ${c.outcome}
+        </span></span>
+        <span class="call-date">${c.agent}</span>
+      </div>
+    `).join('');
+  }
+
+  // ─────────────────────────────────────────
+  // Call Timer
+  // ─────────────────────────────────────────
+  function startCallTimer() {
+    callSeconds = 0;
+    clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      callSeconds++;
+      const display = getTimerDisplay();
+      document.getElementById('callTimer').textContent    = display;
+      document.getElementById('callTimerNew').textContent = display;
+    }, 1000);
+  }
+
+  function stopCallTimer() { clearInterval(timerInterval); }
+
+  function getTimerDisplay() {
+    const m = String(Math.floor(callSeconds / 60)).padStart(2, '0');
+    const s = String(callSeconds % 60).padStart(2, '0');
+    return `${m}:${s}`;
+  }
+
+  // ─────────────────────────────────────────
+  // UI Helpers
+  // ─────────────────────────────────────────
+  function updateStatusBadge(text, cls) {
+    const badge = document.getElementById('callStatusBadge');
+    badge.textContent = text;
+    badge.className = 'call-status-badge ' + cls;
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  function closePopup()   { document.getElementById('screenPopOverlay').classList.remove('show'); }
+  function closeNoRecord(){ document.getElementById('noRecordOverlay').classList.remove('show'); }
+
+  function openLeadProfile() {
+    // Replace with your CRM lead profile URL
+    const phone = customerNumber?.replace(/\D/g, '');
+    showToast('Opening lead profile for ' + customerNumber);
+    // window.open(`/crm/leads?phone=${phone}`, '_blank');
+  }
+
+  function saveNotes() {
+    const notes = document.getElementById('callNotes').value;
+    if (!notes.trim()) { showToast('No notes to save'); return; }
+    // POST notes to your CRM API with currentCallId
+    showToast('Notes saved for Call ID: ' + currentCallId);
+    console.log('Saving notes:', { callId: currentCallId, phone: customerNumber, notes });
+  }
+
+  function createNewLead() {
+    const phone = document.getElementById('newLeadPhone').textContent;
+    showToast('Creating new lead for ' + phone);
+    // window.open(`/crm/leads/new?phone=${phone}`, '_blank');
+    closeNoRecord();
+  }
+
+  // ─────────────────────────────────────────
+  // CRM API — Replace with your actual API
+  // ─────────────────────────────────────────
+  function fetchCustomerFromCRM(phone) {
+    // ⚠️ Replace this with your real API call:
+    // return fetch(`/api/customers?phone=${phone}`).then(r => r.json());
+
+    // Mock data for demo:
+    return new Promise(resolve => {
+      setTimeout(() => {
+        const mockDB = {
+          '9876543210': {
+            name: 'Rahul Sharma',
+            phone: phone,
+            email: 'rahul.sharma@gmail.com',
+            company: 'Acme Solutions',
+            leadStatus: 'Hot',
+            previousCalls: [
+              { date: '01 Jun 2026', duration: '4:32', outcome: 'Connected',    agent: 'Agent A' },
+              { date: '28 May 2026', duration: '1:12', outcome: 'NotAnswered',  agent: 'Agent B' },
+              { date: '25 May 2026', duration: '6:45', outcome: 'Callback',     agent: 'Agent A' },
+            ]
+          },
+          '9876541234': {
+            name: 'Priya Nair',
+            phone: phone,
+            email: 'priya.nair@outlook.com',
+            company: 'Tech Innovators',
+            leadStatus: 'Warm',
+            previousCalls: [
+              { date: '30 May 2026', duration: '3:10', outcome: 'Connected', agent: 'Agent C' },
+            ]
+          }
+        };
+
+        const clean = phone.replace(/\D/g, '').slice(-10);
+        resolve(mockDB[clean] || null);
+      }, 200); // simulate 200ms API response
+    });
+  }
+
+  // ─────────────────────────────────────────
+  // Demo Simulator (remove in production)
+  // ─────────────────────────────────────────
+  function simulate(type) {
+    const events = {
+      OUTGOING_CALL:   { type: 'OUTGOING_CALL',  data: { msg: '9876543210', status: 'RINGING',  Call_ID: '399470529' } },
+      INCALL:          { type: 'CALL_STATUS',     data: 'INCALL' },
+      CALL_ENDED:      { type: 'CALL_STATUS',     data: 'CALL_ENDED' },
+      INCOMING_CALL:   { type: 'INCOME_CALL',     data: { msg: '9876541234', status: 'RINGING',  Call_ID: '399470710' } },
+      INCALL_NO_RECORD:null,
+    };
+
+    if (type === 'INCALL_NO_RECORD') {
+      customerNumber = '9999999999';
+      currentCallId  = '399470999';
+      handleCTIEvent({ type: 'CALL_STATUS', data: 'INCALL' });
+      return;
+    }
+
+    if (events[type]) handleCTIEvent(events[type]);
+  }
+</script>
+</body>
+</html>

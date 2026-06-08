@@ -2,16 +2,17 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import { Toaster } from 'react-hot-toast';
+import ScrollRevealInit from '@/components/ScrollRevealInit';
 
 export const metadata: Metadata = {
-  title: 'Sri Vinayaka Ganapathi Temple | ಶ್ರೀ ವಿನಾಯಕ ಗಣಪತಿ ದೇವಾಲಯ',
-  description: 'Sri Vinayaka Ganapathi Temple - Basavanagudi, Bangalore. Book sevas, make donations, and seek divine blessings of Lord Ganapathi.',
-  keywords: 'Vinayaka Temple, Ganapathi Temple, Bangalore Temple, Ganesh Temple, Seva Booking, Temple Donations, Basavanagudi',
-  authors: [{ name: 'Sri Vinayaka Ganapathi Temple' }],
+  title: 'Sri Sri Sri Karyasiddhi Vinayaka Temple Nagdevanahalli | ಶ್ರೀ ಕಾರ್ಯಸಿದ್ಧಿ ವಿನಾಯಕ ದೇವಾಲಯ',
+  description: 'Sri Sri Sri Karyasiddhi Vinayaka Temple, Nagdevanahalli. Book sevas, make donations, and seek divine blessings of Lord Ganapathi.',
+  keywords: 'Karyasiddhi Vinayaka Temple, Nagdevanahalli, Vinayaka Temple, Ganapathi Temple, Bangalore Temple, Seva Booking',
+  authors: [{ name: 'Sri Sri Sri Karyasiddhi Vinayaka Temple' }],
   viewport: 'width=device-width, initial-scale=1',
   openGraph: {
-    title: 'Sri Vinayaka Ganapathi Temple',
-    description: 'Seek blessings of Lord Ganapathi at Sri Vinayaka Temple, Basavanagudi, Bangalore.',
+    title: 'Sri Sri Sri Karyasiddhi Vinayaka Temple Nagdevanahalli',
+    description: 'Seek blessings of Lord Ganapathi at Sri Sri Sri Karyasiddhi Vinayaka Temple, Nagdevanahalli, Bangalore.',
     type: 'website',
     locale: 'en_IN',
   },
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <LanguageProvider>
+          <ScrollRevealInit />
           {children}
           <Toaster
             position="top-right"

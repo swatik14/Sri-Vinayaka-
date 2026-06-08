@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { X, IndianRupee, Clock, Users, CheckCircle, Copy } from 'lucide-react';
+import { X, IndianRupee, Clock, Users, CheckCircle, Copy, CalendarDays } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { sevaApi } from '@/lib/api';
@@ -183,7 +183,7 @@ export default function BookingModal({ seva, onClose }: Props) {
               disabled={isSubmitting}
               className="btn-primary w-full mt-4 justify-center text-base py-3"
             >
-              {isSubmitting ? t('loading') : `🙏 ${t('confirmBooking')}`}
+              {isSubmitting ? t('loading') : t('confirmBooking')}
             </button>
           </form>
         ) : (
@@ -208,7 +208,7 @@ export default function BookingModal({ seva, onClose }: Props) {
                 </div>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-gray-500">{t('sevaDate')}</span>
+                <span className="text-gray-500 flex items-center gap-1"><CalendarDays size={13} /> {t('sevaDate')}</span>
                 <span className="font-semibold">{booking?.seva_date}</span>
               </div>
               <div className="flex justify-between text-sm">

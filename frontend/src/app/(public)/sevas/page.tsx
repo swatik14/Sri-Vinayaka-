@@ -48,8 +48,8 @@ export default function SevasPage() {
   return (
     <div>
       <div className="page-header">
-        <div className="max-w-4xl mx-auto px-4 relative z-10">
-          <p className="text-temple-gold text-lg mb-2">🙏</p>
+        <div className="max-w-4xl mx-auto px-4 relative z-10 reveal">
+          <p className="text-temple-gold text-lg mb-2">ॐ</p>
           <h1 className="text-4xl md:text-5xl font-heading font-bold text-white mb-4">{t('sevasTitle')}</h1>
           <p className="text-white/80 text-xl">{t('sevasSubtitle')}</p>
         </div>
@@ -101,49 +101,73 @@ export default function SevasPage() {
             </div>
           ) : filtered.length === 0 ? (
             <div className="text-center py-16 text-gray-400">
-              <p className="text-5xl mb-4">🙏</p>
+              <p className="text-5xl mb-4 text-temple-gold/30">ॐ</p>
               <p className="text-xl font-medium">No sevas found</p>
             </div>
           ) : (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filtered.map((seva) => (
-                <div key={seva.id} className="card-hover flex flex-col">
-                  <div className="bg-temple-gradient p-6 text-white relative overflow-hidden">
-                    <span className="absolute text-8xl font-bold text-white/5 -bottom-4 -right-4 pointer-events-none">ॐ</span>
-                    <div className="flex items-start justify-between mb-3">
-                      <span className={categoryColors[seva.category]}>
+              {filtered.map((seva, i) => (
+                <div key={seva.id} className="group flex flex-col rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-temple-gold/20 bg-white reveal-scale"
+                  style={{ transitionDelay: `${(i % 6) * 0.08}s` }}>
+
+                  {/* Card Header */}
+                  <div className="relative p-6 text-white overflow-hidden"
+                    style={{ background: 'linear-gradient(135deg, #6B1A1A 0%, #4A0F0F 60%, #2C1A0E 100%)' }}>
+
+                    {/* Decorative ॐ watermark */}
+                    <span className="absolute text-[110px] font-bold text-white/[0.04] -bottom-6 -right-4 pointer-events-none select-none leading-none">ॐ</span>
+
+                    {/* Top row: badge + price */}
+                    <div className="flex items-center justify-between mb-4">
+                      <span className={`${categoryColors[seva.category]} text-xs px-3 py-1 rounded-full font-semibold`}>
                         {t(seva.category as 'daily' | 'special' | 'monthly' | 'annual')}
                       </span>
+                      <div className="text-right">
+                        <div className="flex items-center gap-0.5 text-temple-gold font-bold text-xl justify-end">
+                          <IndianRupee size={16} strokeWidth={2.5} />
+                          {seva.price.toLocaleString('en-IN')}
+                        </div>
+                        <p className="text-white/50 text-[10px]">{t('perDevotee')}</p>
+                      </div>
                     </div>
-                    <h3 className="font-heading font-bold text-lg leading-snug mb-2">
+
+                    {/* Seva Name — prominent */}
+                    <h3 className="font-heading font-bold text-xl text-white leading-snug mb-3 group-hover:text-temple-gold transition-colors duration-200">
                       {language === 'kn' ? seva.name_kn : seva.name_en}
                     </h3>
-                    <div className="flex items-center gap-1 text-temple-gold text-2xl font-bold">
-                      <IndianRupee size={18} />
-                      {seva.price.toLocaleString('en-IN')}
+
+                    {/* Gold divider */}
+                    <div className="flex items-center gap-2">
+                      <div className="flex-1 h-px bg-gradient-to-r from-temple-gold/60 to-transparent" />
+                      <span className="text-temple-gold/60 text-xs">✦</span>
                     </div>
-                    <p className="text-white/60 text-xs mt-0.5">{t('perDevotee')}</p>
                   </div>
 
-                  <div className="p-5 flex-1 flex flex-col">
+                  {/* Card Body */}
+                  <div className="p-5 flex-1 flex flex-col bg-white">
                     <p className="text-gray-500 text-sm leading-relaxed flex-1 mb-4 line-clamp-3">
                       {language === 'kn' ? seva.description_kn : seva.description_en}
                     </p>
 
-                    <div className="flex items-center gap-4 text-xs text-gray-400 mb-4 pb-4 border-b border-gray-100">
-                      <span className="flex items-center gap-1.5">
-                        <Clock size={13} className="text-temple-saffron" /> {seva.duration_minutes} {t('minutes')}
+                    {/* Meta info */}
+                    <div className="flex items-center gap-4 mb-4 py-3 px-3 bg-temple-cream-dark rounded-xl">
+                      <span className="flex items-center gap-1.5 text-xs font-medium text-temple-brown">
+                        <Clock size={13} className="text-temple-saffron" />
+                        {seva.duration_minutes} {t('minutes')}
                       </span>
-                      <span className="flex items-center gap-1.5">
-                        <Users size={13} className="text-temple-saffron" /> Max {seva.max_devotees}
+                      <div className="w-px h-4 bg-gray-200" />
+                      <span className="flex items-center gap-1.5 text-xs font-medium text-temple-brown">
+                        <Users size={13} className="text-temple-saffron" />
+                        Max {seva.max_devotees}
                       </span>
                     </div>
 
                     <button
                       onClick={() => setSelected(seva)}
-                      className="btn-primary w-full justify-center"
+                      className="w-full py-3 px-4 rounded-xl font-heading font-bold text-sm text-white transition-all duration-200 flex items-center justify-center gap-2 shadow-sm hover:shadow-temple"
+                      style={{ background: 'linear-gradient(135deg, #FF8C00 0%, #D4AF37 100%)' }}
                     >
-                      🙏 {t('bookNow')}
+                      ✦ {t('bookNow')}
                     </button>
                   </div>
                 </div>
@@ -159,10 +183,10 @@ export default function SevasPage() {
           <h3 className="font-heading font-bold text-xl text-temple-maroon mb-4">How to Book a Seva?</h3>
           <div className="grid sm:grid-cols-4 gap-4">
             {[
-              { step: '1', en: 'Choose a Seva', icon: '🙏' },
-              { step: '2', en: 'Fill Details', icon: '📝' },
-              { step: '3', en: 'Confirm Booking', icon: '✅' },
-              { step: '4', en: 'Get Confirmation', icon: '📧' },
+              { step: '1', en: 'Choose a Seva', icon: '1' },
+              { step: '2', en: 'Fill Details', icon: '2' },
+              { step: '3', en: 'Confirm Booking', icon: '3' },
+              { step: '4', en: 'Get Confirmation', icon: '4' },
             ].map(({ step, en, icon }) => (
               <div key={step} className="card p-4 text-center">
                 <div className="text-2xl mb-2">{icon}</div>

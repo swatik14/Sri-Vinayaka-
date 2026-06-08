@@ -9,59 +9,73 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-temple-brown text-white">
-      {/* Om banner */}
-      <div className="bg-temple-gold py-3 text-center">
-        <p className="text-temple-brown font-heading font-bold text-lg tracking-widest">
-          ॐ गं गणपतये नमः ❖ ॐ ಗಂ ಗಣಪತಯೇ ನಮಃ
+    <footer style={{ background: 'linear-gradient(180deg, #2C1A0E 0%, #1A0A0A 100%)' }} className="text-white relative overflow-hidden">
+
+      {/* Decorative OM watermark */}
+      <span className="absolute text-[500px] font-bold text-white/[0.015] -bottom-40 -right-20 pointer-events-none select-none leading-none">ॐ</span>
+
+      {/* Gold top banner */}
+      <div style={{ background: 'linear-gradient(135deg, #B8860B 0%, #D4AF37 40%, #F0D060 50%, #D4AF37 60%, #B8860B 100%)' }} className="py-3 text-center">
+        <p className="text-[#3D0D0D] font-bold tracking-widest text-sm" style={{ fontFamily: 'Cinzel, serif' }}>
+          ॐ गं गणपतये नमः &nbsp;❖&nbsp; ॐ ಗಂ ಗಣಪತಯೇ ನಮಃ
         </p>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="max-w-7xl mx-auto px-4 py-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 relative z-10">
+
         {/* Brand */}
         <div>
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 rounded-full bg-temple-gold flex items-center justify-center text-temple-maroon font-bold text-xl">
+          <div className="flex items-center gap-3 mb-5">
+            <div
+              className="w-14 h-14 rounded-full flex items-center justify-center text-temple-maroon font-bold text-2xl flex-shrink-0"
+              style={{ background: 'linear-gradient(135deg, #D4AF37 0%, #F0D060 50%, #D4AF37 100%)' }}
+            >
               ॐ
             </div>
             <div>
-              <p className="font-heading font-bold text-white">Sri Vinayaka</p>
-              <p className="text-temple-gold text-sm">Ganapathi Temple</p>
+              <p className="font-bold text-white text-base" style={{ fontFamily: 'Cinzel, serif' }}>Sri Sri Sri Karyasiddhi Vinayaka</p>
+              <p className="text-temple-gold text-xs tracking-widest uppercase">Temple, Nagdevanahalli</p>
             </div>
           </div>
-          <p className="text-white/70 text-sm leading-relaxed mb-4">
-            A sacred abode of Lord Ganapathi, blessing devotees for over 200 years in the heart of Basavanagudi.
+          <p className="text-white/60 text-sm leading-relaxed mb-5">
+            A sacred abode of Lord Ganapathi, blessing devotees for over 200 years at Nagdevanahalli, Bangalore - 560056.
           </p>
           <div className="flex gap-3">
-            <a href="#" aria-label="Facebook" className="w-9 h-9 rounded-full bg-white/10 hover:bg-temple-saffron flex items-center justify-center transition-colors">
-              <Facebook size={16} />
-            </a>
-            <a href="#" aria-label="YouTube" className="w-9 h-9 rounded-full bg-white/10 hover:bg-red-600 flex items-center justify-center transition-colors">
-              <Youtube size={16} />
-            </a>
-            <a href="#" aria-label="Instagram" className="w-9 h-9 rounded-full bg-white/10 hover:bg-pink-600 flex items-center justify-center transition-colors">
-              <Instagram size={16} />
-            </a>
+            {[
+              { icon: Facebook, label: 'Facebook', hover: 'hover:bg-blue-600' },
+              { icon: Youtube,  label: 'YouTube',  hover: 'hover:bg-red-600'  },
+              { icon: Instagram,label: 'Instagram',hover: 'hover:bg-pink-600' },
+            ].map(({ icon: Icon, label, hover }) => (
+              <a
+                key={label}
+                href="#"
+                aria-label={label}
+                className={`w-10 h-10 rounded-xl bg-white/10 ${hover} flex items-center justify-center transition-all duration-200 hover:scale-110 border border-white/10`}
+              >
+                <Icon size={16} />
+              </a>
+            ))}
           </div>
         </div>
 
         {/* Quick Links */}
         <div>
-          <h3 className="font-heading font-bold text-temple-gold mb-4 text-lg">{t('quickLinks')}</h3>
-          <ul className="space-y-2">
+          <h3 className="font-bold text-temple-gold mb-5 text-sm uppercase tracking-widest">{t('quickLinks')}</h3>
+          <ul className="space-y-2.5">
             {[
-              { href: '/', label: t('home') },
-              { href: '/about', label: t('about') },
-              { href: '/sevas', label: t('sevas') },
-              { href: '/festivals', label: t('festivals') },
-              { href: '/gallery', label: t('gallery') },
-              { href: '/donations', label: t('donations') },
-              { href: '/live-darshan', label: t('liveDarshan') },
-              { href: '/contact', label: t('contact') },
+              { href: '/',               label: t('home') },
+              { href: '/about',          label: t('about') },
+              { href: '/sevas',          label: t('sevas') },
+              { href: '/festivals',      label: t('festivals') },
+              { href: '/gallery',        label: t('gallery') },
+              { href: '/donations',      label: t('donations') },
+              { href: '/live-darshan',   label: t('liveDarshan') },
+              { href: '/contact',        label: t('contact') },
             ].map(({ href, label }) => (
               <li key={href}>
-                <Link href={href} className="text-white/70 hover:text-temple-gold text-sm transition-colors flex items-center gap-1.5">
-                  <span className="text-temple-saffron text-xs">›</span> {label}
+                <Link href={href} className="text-white/60 hover:text-temple-gold text-sm transition-colors flex items-center gap-2 group">
+                  <span className="w-1.5 h-1.5 rounded-full bg-temple-saffron/50 group-hover:bg-temple-gold transition-colors flex-shrink-0" />
+                  {label}
                 </Link>
               </li>
             ))}
@@ -70,26 +84,23 @@ export default function Footer() {
 
         {/* Temple Info */}
         <div>
-          <h3 className="font-heading font-bold text-temple-gold mb-4 text-lg">{t('usefulInfo')}</h3>
-          <div className="space-y-3">
-            <div>
-              <p className="text-temple-gold text-xs font-semibold uppercase tracking-wide mb-1">{t('dresscode')}</p>
-              <p className="text-white/70 text-sm">{t('dresscodeInfo')}</p>
+          <h3 className="font-bold text-temple-gold mb-5 text-sm uppercase tracking-widest">{t('usefulInfo')}</h3>
+          <div className="space-y-4">
+            <div className="p-3 rounded-xl bg-white/5 border border-white/10">
+              <p className="text-temple-gold text-xs font-bold uppercase tracking-wide mb-1">{t('dresscode')}</p>
+              <p className="text-white/60 text-xs">{t('dresscodeInfo')}</p>
             </div>
-            <div>
-              <p className="text-temple-gold text-xs font-semibold uppercase tracking-wide mb-1">{t('photography')}</p>
-              <p className="text-white/70 text-sm">{t('photographyInfo')}</p>
+            <div className="p-3 rounded-xl bg-white/5 border border-white/10">
+              <p className="text-temple-gold text-xs font-bold uppercase tracking-wide mb-1">{t('photography')}</p>
+              <p className="text-white/60 text-xs">{t('photographyInfo')}</p>
             </div>
-            <div className="mt-3">
-              <p className="text-temple-gold text-xs font-semibold uppercase tracking-wide mb-2">{t('templeTimings')}</p>
-              <div className="flex items-start gap-1.5 text-white/70 text-sm">
-                <Clock size={13} className="mt-0.5 text-temple-saffron flex-shrink-0" />
-                <div>
-                  <p>Mon–Fri: 6:00 AM – 12:00 PM</p>
-                  <p>5:00 PM – 9:00 PM</p>
-                  <p>Weekends: 5:30 AM – 1:00 PM</p>
-                  <p>4:00 PM – 9:30 PM</p>
-                </div>
+            <div className="p-3 rounded-xl bg-white/5 border border-white/10">
+              <p className="text-temple-gold text-xs font-bold uppercase tracking-wide mb-2 flex items-center gap-1.5">
+                <Clock size={11} className="text-temple-saffron" /> {t('templeTimings')}
+              </p>
+              <div className="space-y-1 text-white/60 text-xs">
+                <p>Mon–Fri: 6:00 AM – 12:00 PM, 5:00 PM – 9:00 PM</p>
+                <p>Weekends: 5:30 AM – 1:00 PM, 4:00 PM – 9:30 PM</p>
               </div>
             </div>
           </div>
@@ -97,48 +108,42 @@ export default function Footer() {
 
         {/* Contact */}
         <div>
-          <h3 className="font-heading font-bold text-temple-gold mb-4 text-lg">{t('contact')}</h3>
-          <div className="space-y-3">
-            <div className="flex items-start gap-2.5">
-              <MapPin size={15} className="text-temple-saffron mt-0.5 flex-shrink-0" />
-              <div className="text-white/70 text-sm">
-                <p>Temple Road, Basavanagudi</p>
-                <p>Bangalore, Karnataka 560004</p>
+          <h3 className="font-bold text-temple-gold mb-5 text-sm uppercase tracking-widest">{t('contact')}</h3>
+          <div className="space-y-4">
+            {[
+              { icon: MapPin, lines: ['Nagdevanahalli, Bangalore', 'Karnataka - 560056'] },
+              { icon: Phone,  lines: ['+91 80 2661 0000', '+91 98765 43210'] },
+            ].map(({ icon: Icon, lines }, i) => (
+              <div key={i} className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded-lg bg-temple-saffron/15 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <Icon size={14} className="text-temple-saffron" />
+                </div>
+                <div className="text-white/60 text-sm">
+                  {lines.map((l) => <p key={l}>{l}</p>)}
+                </div>
               </div>
-            </div>
-            <div className="flex items-center gap-2.5">
-              <Phone size={15} className="text-temple-saffron flex-shrink-0" />
-              <div className="text-white/70 text-sm">
-                <p>+91 80 2661 0000</p>
-                <p>+91 98765 43210</p>
+            ))}
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-temple-saffron/15 flex items-center justify-center flex-shrink-0">
+                <Mail size={14} className="text-temple-saffron" />
               </div>
-            </div>
-            <div className="flex items-center gap-2.5">
-              <Mail size={15} className="text-temple-saffron flex-shrink-0" />
-              <a href="mailto:info@srivinayakatemple.org" className="text-white/70 hover:text-temple-gold text-sm transition-colors">
+              <a href="mailto:info@srivinayakatemple.org" className="text-white/60 hover:text-temple-gold text-sm transition-colors">
                 info@srivinayakatemple.org
               </a>
             </div>
           </div>
 
-          {/* Map embed placeholder */}
-          <div className="mt-4 rounded-lg overflow-hidden border border-white/10 bg-white/5 h-28 flex items-center justify-center">
-            <Link
-              href="https://maps.google.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white/50 text-xs hover:text-temple-gold transition-colors flex items-center gap-1"
-            >
-              <MapPin size={14} /> {t('getDirections')}
-            </Link>
+          <div className="mt-5 p-3 rounded-xl border border-temple-gold/20 bg-temple-gold/5 text-center">
+            <p className="text-temple-gold/80 text-xs font-medium">Open 365 days a year</p>
+            <p className="text-white/40 text-xs mt-0.5">Including all festivals & holidays</p>
           </div>
         </div>
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-white/10 py-4 text-center text-white/50 text-xs px-4">
-        <p>© {year} Sri Vinayaka Ganapathi Temple Trust. {t('allRightsReserved')}.</p>
-        <p className="mt-1 text-temple-gold/60">{t('omNamah')}</p>
+      <div className="border-t border-white/10 py-5 text-center text-white/40 text-xs px-4 relative z-10">
+        <p>© {year} Sri Sri Sri Karyasiddhi Vinayaka Temple, Nagdevanahalli. {t('allRightsReserved')}.</p>
+        <p className="mt-1.5 text-temple-gold/50 tracking-widest">{t('omNamah')}</p>
       </div>
     </footer>
   );

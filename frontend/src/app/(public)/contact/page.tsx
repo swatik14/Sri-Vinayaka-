@@ -16,7 +16,7 @@ export default function ContactPage() {
     e.preventDefault();
     setIsSubmitting(true);
     await new Promise((r) => setTimeout(r, 1000));
-    toast.success('Message sent! We will get back to you soon. 🙏');
+    toast.success('Message sent! We will get back to you soon.');
     setForm({ name: '', email: '', phone: '', subject: '', message: '' });
     setIsSubmitting(false);
   };
@@ -30,8 +30,8 @@ export default function ContactPage() {
   return (
     <div>
       <div className="page-header">
-        <div className="max-w-4xl mx-auto px-4 relative z-10">
-          <p className="text-temple-gold text-2xl mb-2">📬</p>
+        <div className="max-w-4xl mx-auto px-4 relative z-10 reveal">
+          <p className="text-temple-gold text-2xl mb-2">ॐ</p>
           <h1 className="text-4xl md:text-5xl font-heading font-bold text-white mb-4">{t('contactTitle')}</h1>
           <p className="text-white/80 text-xl">{t('contactSubtitle')}</p>
         </div>
@@ -41,7 +41,7 @@ export default function ContactPage() {
         <div className="max-w-6xl mx-auto px-4 grid lg:grid-cols-2 gap-10">
           {/* Left — info */}
           <div className="space-y-6">
-            <div className="card p-6">
+            <div className="card p-6 reveal-left">
               <h3 className="font-heading font-bold text-xl text-temple-maroon mb-5">{t('visitUs')}</h3>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
@@ -49,10 +49,10 @@ export default function ContactPage() {
                     <MapPin size={18} className="text-temple-saffron" />
                   </div>
                   <div>
-                    <p className="font-semibold text-temple-brown">Temple Road, Basavanagudi</p>
-                    <p className="text-gray-500 text-sm">Bangalore, Karnataka 560004</p>
+                    <p className="font-semibold text-temple-brown">Nagdevanahalli, Bangalore</p>
+                    <p className="text-gray-500 text-sm">Bangalore, Karnataka 560056</p>
                     <a
-                      href="https://www.google.com/maps"
+                      href="https://www.google.com/maps/search/Nagdevanahalli+Bangalore"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1.5 text-temple-saffron text-sm font-medium mt-1 hover:gap-2.5 transition-all"
@@ -88,22 +88,22 @@ export default function ContactPage() {
             </div>
 
             {/* Timings */}
-            <div className="card p-6">
+            <div className="card p-6 reveal-left" style={{ transitionDelay: '0.1s' }}>
               <h3 className="font-heading font-bold text-xl text-temple-maroon mb-4 flex items-center gap-2">
                 <Clock size={18} className="text-temple-saffron" /> {t('openingHours')}
               </h3>
               <div className="space-y-3">
-                {timings.map((t) => (
-                  <div key={t.day} className="flex flex-col sm:flex-row sm:justify-between gap-1 py-2 border-b border-gray-100 last:border-0">
-                    <span className="font-medium text-temple-brown text-sm">{t.day}</span>
-                    <span className="text-gray-500 text-sm">{t.time}</span>
+                {timings.map((timing) => (
+                  <div key={timing.day} className="flex flex-col sm:flex-row sm:justify-between gap-1 py-2 border-b border-gray-100 last:border-0">
+                    <span className="font-medium text-temple-brown text-sm">{timing.day}</span>
+                    <span className="text-gray-500 text-sm">{timing.time}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Social */}
-            <div className="card p-6">
+            <div className="card p-6 reveal-left" style={{ transitionDelay: '0.2s' }}>
               <h3 className="font-heading font-bold text-xl text-temple-maroon mb-4">{t('followUs')}</h3>
               <div className="flex gap-3">
                 {[
@@ -115,7 +115,7 @@ export default function ContactPage() {
                     key={label}
                     href={href}
                     aria-label={label}
-                    className={`w-12 h-12 rounded-xl bg-temple-cream-dark ${bg} flex items-center justify-center text-temple-brown hover:text-white transition-all duration-200`}
+                    className={`w-12 h-12 rounded-xl bg-temple-cream-dark ${bg} flex items-center justify-center text-temple-brown hover:text-white transition-all duration-200 hover:scale-110`}
                   >
                     <Icon size={20} />
                   </a>
@@ -125,7 +125,7 @@ export default function ContactPage() {
           </div>
 
           {/* Right — form */}
-          <div>
+          <div className="reveal-right">
             <div className="card p-6">
               <h3 className="font-heading font-bold text-xl text-temple-maroon mb-5">{t('sendMessage')}</h3>
               <form onSubmit={handleSubmit} className="space-y-4">
@@ -183,11 +183,38 @@ export default function ContactPage() {
                     placeholder="Your message..."
                   />
                 </div>
-                <button type="submit" disabled={isSubmitting} className="btn-primary w-full justify-center">
+                <button type="submit" disabled={isSubmitting} className="btn-primary w-full justify-center hover:scale-[1.02] transition-transform">
                   <Send size={16} />
                   {isSubmitting ? t('loading') : t('sendMessage')}
                 </button>
               </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Map section */}
+      <section className="py-10 bg-temple-cream-dark">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="card overflow-hidden reveal">
+            <div className="bg-temple-cream-dark min-h-[280px] flex flex-col items-center justify-center gap-4 p-8 text-center">
+              <div className="w-16 h-16 rounded-full flex items-center justify-center animate-glow"
+                style={{ background: 'linear-gradient(135deg, #D4AF37, #FF9A00)' }}>
+                <MapPin size={28} className="text-white" />
+              </div>
+              <div>
+                <p className="text-temple-maroon font-heading font-bold text-xl mb-1">Sri Sri Sri Karyasiddhi Vinayaka Temple</p>
+                <p className="text-gray-500 text-sm">Nagdevanahalli, Bangalore - 560056</p>
+                <p className="text-gray-500 text-sm">Karnataka, India</p>
+              </div>
+              <a
+                href="https://www.google.com/maps/search/Nagdevanahalli+Bangalore"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary hover:scale-105 transition-transform"
+              >
+                <Navigation size={16} /> Open in Google Maps
+              </a>
             </div>
           </div>
         </div>

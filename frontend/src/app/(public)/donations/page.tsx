@@ -107,8 +107,8 @@ function DonationsContent() {
   return (
     <div>
       <div className="page-header">
-        <div className="max-w-4xl mx-auto px-4 relative z-10">
-          <p className="text-temple-gold text-2xl mb-2">💛</p>
+        <div className="max-w-4xl mx-auto px-4 relative z-10 reveal">
+          <p className="text-temple-gold text-2xl mb-2">ॐ</p>
           <h1 className="text-4xl md:text-5xl font-heading font-bold text-white mb-4">{t('donationsTitle')}</h1>
           <p className="text-white/80 text-xl">{t('donationsSubtitle')}</p>
           <p className="text-temple-gold/80 text-sm mt-2">{t('taxBenefit')}</p>
@@ -118,7 +118,7 @@ function DonationsContent() {
       <section className="py-12">
         <div className="max-w-6xl mx-auto px-4 grid lg:grid-cols-3 gap-8">
           {/* Donation causes */}
-          <div>
+          <div className="reveal-left">
             <h3 className="font-heading font-bold text-xl text-temple-maroon mb-5">Choose a Cause</h3>
             <div className="space-y-3">
               {purposes.map((p) => (
@@ -163,7 +163,7 @@ function DonationsContent() {
           </div>
 
           {/* Donation form */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 reveal-right">
             <div className="card p-6">
               <h3 className="font-heading font-bold text-xl text-temple-maroon mb-5">{t('donationsTitle')}</h3>
 
@@ -298,7 +298,7 @@ function DonationsContent() {
                   disabled={isSubmitting || !amount}
                   className="btn-gold w-full justify-center text-base py-4"
                 >
-                  {isSubmitting ? t('loading') : `💛 ${t('donate')}`}
+                  {isSubmitting ? t('loading') : t('donate')}
                 </button>
 
                 <p className="text-center text-xs text-gray-400">
